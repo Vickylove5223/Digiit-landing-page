@@ -6057,7 +6057,7 @@ footer.footer-harmony {
 .apply-tab-card.active {
   border-color: var(--indigo);
   background: #ffffff;
-  box-shadow: 0 4px 16px rgba(39, 57, 138, 0.08);
+  box-shadow: none;
 }
 
 .apply-radio-circle {

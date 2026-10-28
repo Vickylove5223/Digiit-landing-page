@@ -170,7 +170,7 @@ export default function ApplicationForm() {
                 <span className="apply-radio-circle">
                   {mode === 'employer' && <span className="apply-radio-dot" />}
                 </span>
-                <span className="apply-tab-label">I am an Employer</span>
+                <span className="apply-tab-label">I'm an Employer/HR</span>
               </div>
 
               <div
