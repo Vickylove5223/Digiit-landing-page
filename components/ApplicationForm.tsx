@@ -116,17 +116,6 @@ export default function ApplicationForm() {
     <div className="apply-main-layout">
       {/* Form Box */}
       <div className="apply-form-box">
-        {/* Form Header (Headline & Subtext) */}
-        <div className="apply-form-header">
-          <h2>
-            {mode === 'employer' ? 'Empower your workforce with Digiit' : 'Request instant, confidential credit'}
-          </h2>
-          <p>
-            {mode === 'employer'
-              ? 'Join 40+ leading companies in Nigeria offering financial peace of mind with zero balance-sheet risk.'
-              : 'Borrow against your verified salary. Deducted automatically on payday with no embarrassing calls or collateral.'}
-          </p>
-        </div>
 
         {submitted ? (
           <div className="contact-success-box" role="alert">
