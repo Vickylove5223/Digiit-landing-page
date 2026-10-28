@@ -25,12 +25,11 @@ export default function BlogPage() {
             <div className="blog-hero-content">
 
               <h1 className="blog-hero-title">
-                Workplace Financial Health, Insights &amp; Guides
+                Insights &amp; Guides
               </h1>
 
               <p className="blog-hero-lead">
-                Actionable perspectives from veteran bankers, HR directors, and risk analysts on building resilient,
-                financially secure workforces across Nigerian enterprises.
+                Actionable insights and guides on workplace financial health.
               </p>
             </div>
           </div>

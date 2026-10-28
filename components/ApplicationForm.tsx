@@ -1,5 +1,6 @@
 'use client'
-import { useState, useMemo, type FormEvent } from 'react'
+import { useState, useMemo, useEffect, type FormEvent } from 'react'
+import SuccessModal, { type SuccessModalDetail } from '@/components/SuccessModal'
 
 type AppMode = 'employer' | 'employee'
 
@@ -9,14 +10,31 @@ export default function ApplicationForm() {
   const [mode, setMode] = useState<AppMode>('employer')
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [initialValues, setInitialValues] = useState<{
+    company?: string
+    name?: string
+    email?: string
+    phone?: string
+    location?: string
+  }>({})
+
   const [submittedData, setSubmittedData] = useState<{
     name: string
     email: string
     phone?: string
     company?: string
+    employer?: string
     mode: AppMode
+    staff?: string
+    location?: string
+    timeline?: string
     loanAmount?: number
+    tenor?: number
+    monthlyDeduction?: number
+    totalRepayment?: number
+    purpose?: string
   } | null>(null)
 
   // Employee interactive loan calculator state
@@ -38,8 +56,34 @@ export default function ApplicationForm() {
     return '₦' + val.toLocaleString('en-NG')
   }
 
+  // Pre-fill from URL parameters if present and clean up URL
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const params = new URLSearchParams(window.location.search)
+    const company = params.get('company') || undefined
+    const name = params.get('name') || undefined
+    const email = params.get('email') || undefined
+    const phone = params.get('phone') || undefined
+    const location = params.get('location') || undefined
+    const modeParam = params.get('mode')
+
+    if (company || name || email || phone || location) {
+      setInitialValues({ company, name, email, phone, location })
+    }
+
+    if (modeParam === 'employee' || modeParam === 'employer') {
+      setMode(modeParam)
+    }
+
+    // Clean up address bar query params to keep clean URL
+    if (window.location.search) {
+      window.history.replaceState({}, '', window.location.pathname)
+    }
+  }, [])
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    e.stopPropagation()
     setError(null)
     setSubmitting(true)
 
@@ -89,10 +133,19 @@ export default function ApplicationForm() {
         email: payload.email,
         phone: payload.phone,
         company: payload.company,
+        employer: payload.employer,
         mode,
-        loanAmount,
+        staff: payload.staff,
+        location: payload.location,
+        timeline: payload.timeline,
+        purpose: payload.purpose,
+        loanAmount: payload.loanAmount,
+        tenor: payload.tenor,
+        monthlyDeduction: payload.monthlyDeduction,
+        totalRepayment: payload.totalRepayment,
       })
       setSubmitted(true)
+      setShowModal(true)
     } catch (err: any) {
       setError(err?.message || 'Something went wrong while submitting. Please check your network and try again.')
     } finally {
@@ -102,6 +155,7 @@ export default function ApplicationForm() {
 
   function handleReset() {
     setSubmitted(false)
+    setShowModal(false)
     setError(null)
     setSubmittedData(null)
   }
@@ -112,11 +166,41 @@ export default function ApplicationForm() {
       : 'Hello Digiit, I would like assistance with my application on the portal.'
   )}`
 
+  const modalDetails: SuccessModalDetail[] = useMemo(() => {
+    if (!submittedData) return []
+    if (submittedData.mode === 'employer') {
+      return [
+        { label: 'Application Type', value: 'Employer Corporate Partnership' },
+        ...(submittedData.company ? [{ label: 'Company Name', value: submittedData.company }] : []),
+        { label: 'Contact Person', value: submittedData.name },
+        { label: 'Official Work Email', value: submittedData.email },
+        ...(submittedData.phone ? [{ label: 'Phone Number', value: submittedData.phone }] : []),
+        ...(submittedData.staff ? [{ label: 'Staff Count', value: `${submittedData.staff} staff` }] : []),
+        ...(submittedData.location ? [{ label: 'Headquarters', value: submittedData.location }] : []),
+        ...(submittedData.timeline ? [{ label: 'Launch Timeline', value: submittedData.timeline }] : []),
+        { label: 'Status', value: 'Received & In Review' },
+      ]
+    } else {
+      return [
+        { label: 'Application Type', value: 'Employee Workplace Loan' },
+        { label: 'Applicant Name', value: submittedData.name },
+        ...(submittedData.employer ? [{ label: 'Employer', value: submittedData.employer }] : []),
+        { label: 'Requested Loan', value: formatNaira(submittedData.loanAmount || 350000) },
+        {
+          label: 'Repayment Tenor',
+          value: `${submittedData.tenor || 6} Months (${formatNaira(submittedData.monthlyDeduction || 0)}/mo)`,
+        },
+        ...(submittedData.purpose ? [{ label: 'Loan Purpose', value: submittedData.purpose }] : []),
+        { label: 'Email', value: submittedData.email },
+        { label: 'Status', value: 'Received & In Review' },
+      ]
+    }
+  }, [submittedData])
+
   return (
     <div className="apply-main-layout">
       {/* Form Box */}
       <div className="apply-form-box">
-
         {submitted ? (
           <div className="contact-success-box" role="alert">
             <div className="contact-success-icon">
@@ -129,6 +213,14 @@ export default function ApplicationForm() {
               Thank you{submittedData?.name ? `, ${submittedData.name}` : ''}. We have received your {submittedData?.mode === 'employer' ? 'corporate partnership registration' : 'salary loan application'}. Our operations team in Victoria Island, Lagos will review your submission and contact you at <strong>{submittedData?.email}</strong> within 24 business hours.
             </p>
             <div style={{ marginTop: '1.5rem', display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <button
+                type="button"
+                onClick={() => setShowModal(true)}
+                className="btn btn-primary"
+                style={{ fontSize: '0.9rem', padding: '0.65rem 1.3rem' }}
+              >
+                View Confirmation Modal
+              </button>
               <a
                 href={whatsappInquiryUrl}
                 target="_blank"
@@ -140,7 +232,7 @@ export default function ApplicationForm() {
               </a>
               <a
                 href="tel:07086429380"
-                className="btn btn-primary"
+                className="btn btn-ghost"
                 style={{ fontSize: '0.9rem', padding: '0.65rem 1.3rem' }}
               >
                 Call desk: 07086429380
@@ -156,7 +248,7 @@ export default function ApplicationForm() {
             </div>
           </div>
         ) : (
-          <form className="contact-form" onSubmit={handleSubmit}>
+          <form className="contact-form" action="#" method="POST" onSubmit={handleSubmit}>
             {/* Role Selection Radio Cards */}
             <div className="apply-tabs-wrap" role="radiogroup" aria-label="Select Application Type">
               <div
@@ -170,7 +262,7 @@ export default function ApplicationForm() {
                 <span className="apply-radio-circle">
                   {mode === 'employer' && <span className="apply-radio-dot" />}
                 </span>
-                <span className="apply-tab-label">I'm an Employer/HR</span>
+                <span className="apply-tab-label">I&apos;m an Employer/HR</span>
               </div>
 
               <div
@@ -187,6 +279,13 @@ export default function ApplicationForm() {
                 <span className="apply-tab-label">I am an Employee</span>
               </div>
             </div>
+
+            {/* Subtext below selection cards */}
+            <p className="apply-mode-subtext">
+              {mode === 'employer'
+                ? 'Join 40+ leading companies in Nigeria offering financial peace of mind with zero balance-sheet risk.'
+                : 'Borrow against your verified salary. Deducted automatically on payday with no embarrassing calls or collateral.'}
+            </p>
 
             {error && (
               <div
@@ -216,7 +315,7 @@ export default function ApplicationForm() {
                 <input
                   type="range"
                   min="30000"
-                  max="5000000"
+                  max="10000000"
                   step="10000"
                   value={loanAmount}
                   onChange={(e) => setLoanAmount(Number(e.target.value))}
@@ -226,8 +325,8 @@ export default function ApplicationForm() {
 
                 <div className="apply-calc-range">
                   <span>₦30,000</span>
-                  <span>₦2,500,000</span>
                   <span>₦5,000,000</span>
+                  <span>₦10,000,000</span>
                 </div>
 
                 <span className="apply-tenor-label">Repayment Tenor</span>
@@ -274,6 +373,7 @@ export default function ApplicationForm() {
                       name="company"
                       type="text"
                       required
+                      defaultValue={initialValues.company || ''}
                       autoComplete="organization"
                       placeholder="e.g. Sterling Logistics Ltd"
                       className="contact-input"
@@ -289,6 +389,7 @@ export default function ApplicationForm() {
                       name="name"
                       type="text"
                       required
+                      defaultValue={initialValues.name || ''}
                       autoComplete="name"
                       placeholder="e.g. Folake Sanusi (HR Director)"
                       className="contact-input"
@@ -306,6 +407,7 @@ export default function ApplicationForm() {
                       name="email"
                       type="email"
                       required
+                      defaultValue={initialValues.email || ''}
                       autoComplete="email"
                       placeholder="e.g. f.sanusi@company.ng"
                       className="contact-input"
@@ -321,6 +423,7 @@ export default function ApplicationForm() {
                       name="phone"
                       type="tel"
                       required
+                      defaultValue={initialValues.phone || ''}
                       autoComplete="tel"
                       placeholder="e.g. 0802 345 6789"
                       className="contact-input"
@@ -345,14 +448,15 @@ export default function ApplicationForm() {
                     <label htmlFor="emp-location">
                       Headquarters State
                     </label>
-                    <select id="emp-location" name="location" required className="contact-select" defaultValue="Lagos">
-                      <option value="Lagos">Lagos</option>
-                      <option value="Abuja (FCT)">Abuja (FCT)</option>
-                      <option value="Rivers (Port Harcourt)">Rivers (Port Harcourt)</option>
-                      <option value="Ogun">Ogun</option>
-                      <option value="Oyo (Ibadan)">Oyo (Ibadan)</option>
-                      <option value="Other States">Other States</option>
-                    </select>
+                    <input
+                      id="emp-location"
+                      name="location"
+                      type="text"
+                      required
+                      defaultValue={initialValues.location || ''}
+                      placeholder="e.g. Lagos"
+                      className="contact-input"
+                    />
                   </div>
                 </div>
 
@@ -394,6 +498,7 @@ export default function ApplicationForm() {
                       name="name"
                       type="text"
                       required
+                      defaultValue={initialValues.name || ''}
                       autoComplete="name"
                       placeholder="e.g. Babatunde Adeyemi"
                       className="contact-input"
@@ -409,6 +514,7 @@ export default function ApplicationForm() {
                       name="email"
                       type="email"
                       required
+                      defaultValue={initialValues.email || ''}
                       autoComplete="email"
                       placeholder="e.g. b.adeyemi@work.com"
                       className="contact-input"
@@ -426,6 +532,7 @@ export default function ApplicationForm() {
                       name="phone"
                       type="tel"
                       required
+                      defaultValue={initialValues.phone || ''}
                       autoComplete="tel"
                       placeholder="e.g. 0803 123 4567"
                       className="contact-input"
@@ -441,6 +548,7 @@ export default function ApplicationForm() {
                       name="employer"
                       type="text"
                       required
+                      defaultValue={initialValues.company || ''}
                       placeholder="e.g. Sterling Logistics Ltd"
                       className="contact-input"
                     />
@@ -498,6 +606,31 @@ export default function ApplicationForm() {
           </form>
         )}
       </div>
+
+      {/* Reusable Success Modal */}
+      <SuccessModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        title={submittedData?.mode === 'employer' ? 'Corporate Application Received!' : 'Loan Request Submitted!'}
+        badgeText={submittedData?.mode === 'employer' ? 'Corporate Partnership Registration' : 'Salary Advance Application'}
+        subtitle={
+          <span>
+            Thank you{submittedData?.name ? `, ${submittedData.name}` : ''}. We have received your {submittedData?.mode === 'employer' ? 'corporate partnership registration' : 'salary loan application'}.
+          </span>
+        }
+        details={modalDetails}
+        notice={
+          <span>
+            Our operations desk in Victoria Island, Lagos will verify your submission and reach out to <strong>{submittedData?.email}</strong> within 24 business hours.
+          </span>
+        }
+        whatsappUrl={whatsappInquiryUrl}
+        whatsappText="Chat with Onboarding on WhatsApp"
+        phoneHref="tel:07086429380"
+        phoneText="Call Desk: 07086429380"
+        secondaryText="Done"
+        onSecondaryAction={() => setShowModal(false)}
+      />
     </div>
   )
 }

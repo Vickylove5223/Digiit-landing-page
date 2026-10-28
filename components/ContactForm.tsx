@@ -1,16 +1,26 @@
 'use client'
 
-import { useState, type FormEvent } from 'react'
+import { useState, useMemo, type FormEvent } from 'react'
 import { getWhatsAppUrl, WHATSAPP_RAW_PHONE } from '@/lib/whatsapp'
+import SuccessModal, { type SuccessModalDetail } from '@/components/SuccessModal'
 
 export default function ContactForm() {
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [submittedData, setSubmittedData] = useState<{ firstName: string; email: string } | null>(null)
+  const [submittedData, setSubmittedData] = useState<{
+    firstName: string
+    lastName?: string
+    email: string
+    phone?: string
+    company?: string
+    message?: string
+  } | null>(null)
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    e.stopPropagation()
     setError(null)
     setSubmitting(true)
 
@@ -44,8 +54,9 @@ export default function ContactForm() {
         throw new Error(resData.error || 'Failed to send your message. Please try again.')
       }
 
-      setSubmittedData({ firstName, email })
+      setSubmittedData({ firstName, lastName, email, phone, company, message })
       setSubmitted(true)
+      setShowModal(true)
     } catch (err: any) {
       setError(err?.message || 'Something went wrong while sending your message. Please try again or reach out on WhatsApp.')
     } finally {
@@ -55,15 +66,37 @@ export default function ContactForm() {
 
   function handleReset() {
     setSubmitted(false)
+    setShowModal(false)
     setError(null)
     setSubmittedData(null)
   }
 
   const whatsappInquiryUrl = getWhatsAppUrl(
     submittedData
-      ? `Hello Digiit, I just submitted an inquiry on your website from ${submittedData.firstName} (${submittedData.email}).`
+      ? `Hello Digiit, I just submitted an inquiry on your website from ${submittedData.firstName}${
+          submittedData.lastName ? ` ${submittedData.lastName}` : ''
+        } (${submittedData.email}).`
       : 'Hello Digiit, I would like to make an inquiry regarding your salary-backed loans.'
   )
+
+  const modalDetails: SuccessModalDetail[] = useMemo(() => {
+    if (!submittedData) return []
+    const details: SuccessModalDetail[] = [
+      {
+        label: 'Sender',
+        value: `${submittedData.firstName} ${submittedData.lastName || ''}`.trim(),
+      },
+      { label: 'Email Address', value: submittedData.email },
+    ]
+    if (submittedData.phone) {
+      details.push({ label: 'Phone Number', value: submittedData.phone })
+    }
+    if (submittedData.company) {
+      details.push({ label: 'Organization', value: submittedData.company })
+    }
+    details.push({ label: 'Status', value: 'Received & Logged' })
+    return details
+  }, [submittedData])
 
   return (
     <div className="contact-form-card">
@@ -82,6 +115,14 @@ export default function ContactForm() {
           </p>
 
           <div style={{ marginTop: '1.5rem', display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <button
+              type="button"
+              onClick={() => setShowModal(true)}
+              className="btn btn-primary"
+              style={{ fontSize: '0.9rem', padding: '0.65rem 1.4rem' }}
+            >
+              View Confirmation Modal
+            </button>
             <a
               href={whatsappInquiryUrl}
               target="_blank"
@@ -109,7 +150,7 @@ export default function ContactForm() {
           </div>
         </div>
       ) : (
-        <form className="contact-form" onSubmit={handleSubmit}>
+        <form className="contact-form" action="#" method="POST" onSubmit={handleSubmit}>
           {error && (
             <div
               style={{
@@ -262,6 +303,31 @@ export default function ContactForm() {
           </p>
         </form>
       )}
+
+      {/* Reusable Success Modal */}
+      <SuccessModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        title="Message Sent Successfully!"
+        badgeText="Inquiry Received & Logged"
+        subtitle={
+          <span>
+            Thank you{submittedData?.firstName ? `, ${submittedData.firstName}` : ''}. We have received your message and our team will get back to you shortly.
+          </span>
+        }
+        details={modalDetails}
+        notice={
+          <span>
+            Our support and partnership desk in Victoria Island, Lagos will respond to <strong>{submittedData?.email}</strong> within 1 business day.
+          </span>
+        }
+        whatsappUrl={whatsappInquiryUrl}
+        whatsappText="Chat with Support on WhatsApp"
+        phoneHref={`tel:${WHATSAPP_RAW_PHONE}`}
+        phoneText={`Call Desk: ${WHATSAPP_RAW_PHONE}`}
+        secondaryText="Done"
+        onSecondaryAction={() => setShowModal(false)}
+      />
     </div>
   )
 }

@@ -64,7 +64,6 @@ export default function SinglePostPage({ params }: PageProps) {
               </div>
 
               <h1 className="post-title">{post.title}</h1>
-              <p className="post-lead">{post.excerpt}</p>
 
               {/* Author & Share Bar */}
               <div className="post-author-bar">
