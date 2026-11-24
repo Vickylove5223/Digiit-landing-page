@@ -6838,8 +6838,9 @@ footer.footer-harmony {
 }
 .ldr-modal {
   position: relative;
+  --ldr-max-h: min(86vh, 720px);
   width: min(920px, 100%);
-  max-height: min(86vh, 720px);
+  max-height: var(--ldr-max-h);
   background: #fff;
   border-radius: 24px;
   display: grid;
@@ -6850,7 +6851,8 @@ footer.footer-harmony {
 }
 .ldr-photo { padding: 28px 0 28px 28px; align-self: start; }
 .ldr-photo img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; object-position: center top; display: block; border-radius: 16px; background: #eef1f6; }
-.ldr-body { padding: 36px 36px 32px; overflow-y: auto; color: #12163a; }
+/* Cap the text column at the modal height so long bios scroll inside it instead of being clipped. */
+.ldr-body { padding: 36px 36px 32px; max-height: var(--ldr-max-h); min-height: 0; overflow-y: auto; overscroll-behavior: contain; color: #12163a; }
 .ldr-body h3 { margin: 0; font-size: 1.6rem; line-height: 1.2; letter-spacing: -0.01em; color: #12163a; padding-right: 40px; }
 .ldr-role { margin: 6px 0 0; font-size: 0.98rem; font-weight: 600; color: #27398a; }
 .ldr-cred { margin: 10px 0 0; display: inline-block; font-size: 0.8rem; font-weight: 600; color: #27398a; background: #eef2ff; border-radius: 999px; padding: 4px 12px; }
@@ -6883,7 +6885,8 @@ footer.footer-harmony {
 @keyframes ldr-pop { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: none; } }
 @media (max-width: 760px) {
   .ldr-overlay { padding: 12px; align-items: flex-end; }
-  .ldr-modal { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); max-height: 90vh; border-radius: 20px; }
+  .ldr-modal { --ldr-max-h: 90vh; grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); border-radius: 20px; }
+  .ldr-body { max-height: none; }
   .ldr-photo { padding: 20px 20px 0; }
   .ldr-photo img { width: 120px; aspect-ratio: 1; border-radius: 50%; }
   .ldr-body { padding: 24px 20px 28px; }
@@ -6913,8 +6916,7 @@ footer.footer-harmony {
 .ab-values { margin-top: clamp(2.5rem, 5vw, 3.75rem); }
 .ab-values-title { margin: 0 0 1.25rem; font-size: clamp(1.25rem, 2vw, 1.5rem); color: #12163a; letter-spacing: -0.01em; }
 .ab-values-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
-.ab-value { background: #fff; border: 1px solid #e6e9f2; border-radius: 20px; padding: 1.5rem; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
-.ab-value:hover { transform: translateY(-3px); border-color: #d3d9ec; box-shadow: 0 16px 32px -20px rgba(18, 22, 58, 0.35); }
+.ab-value { background: #fff; border: 1px solid #e6e9f2; border-radius: 20px; padding: 1.5rem; }
 .ab-value-ico { width: 56px; height: 56px; border-radius: 16px; background: #f4f6fc; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
 .ab-value-ico img { width: 34px; height: 34px; object-fit: contain; }
 .ab-value h4 { margin: 0 0 0.4rem; font-size: 1.08rem; color: #12163a; }
@@ -6929,7 +6931,6 @@ footer.footer-harmony {
   .ab-value-ico { width: 48px; height: 48px; margin: 0; grid-row: span 2; }
   .ab-value-ico img { width: 30px; height: 30px; }
 }
-@media (prefers-reduced-motion: reduce) { .ab-value { transition: none; } .ab-value:hover { transform: none; } }
 
 /* CTA banner lives inside the footer: one continuous block */
 .footer-harmony .promo-banner {
