@@ -7,13 +7,25 @@ interface Testimonial {
   name: string
   role: string
   source?: string
+  avatar: string
 }
+
+const face = (id: string) => `https://images.unsplash.com/${id}?w=96&h=96&fit=crop&crop=faces&auto=format&q=70`
 
 const testimonials: Testimonial[] = [
   {
     quote:
+      '“Before Digiit, I was fielding 20+ salary advance requests every month. Now it is zero. Our staff handle it themselves seamlessly, and HR can focus on actual strategic work.”',
+    name: 'Mrs. Ngozi A.',
+    avatar: face('photo-1573497019940-1c28c88b4f3e'),
+    role: 'Head of HR',
+    source: 'from Verified Partner',
+  },
+  {
+    quote:
       '“It gives me the ability to be in charge of my finances. The constant update of what I have earned has given me the opportunity to finally gain control of my money without high-interest loan apps.”',
     name: 'Denise N.',
+    avatar: face('photo-1531123897727-8f129e1688ce'),
     role: 'Digiit member',
     source: 'from Trustpilot',
   },
@@ -21,6 +33,7 @@ const testimonials: Testimonial[] = [
     quote:
       '“What a fantastic invention! I can access emergency funds easily whenever urgent expenses come up before payday. Sudden expenses are no longer a drama. Transfers take a millisecond! Blooming Brilliant!”',
     name: 'Charlotte A.',
+    avatar: face('photo-1611432579699-484f7990b127'),
     role: 'Digiit member',
     source: 'from Trustpilot',
   },
@@ -28,20 +41,15 @@ const testimonials: Testimonial[] = [
     quote:
       '“I have been able to save, make withdrawals and borrow safely. Thank you so much for this initiative. I needed ₦300,000 for school fees and received it without delay.”',
     name: 'Emmzy K.',
+    avatar: face('photo-1522529599102-193c0d76b5b6'),
     role: 'Digiit member',
     source: 'from Trustpilot',
   },
   {
     quote:
-      '“Before Digiit, I was fielding 20+ salary advance requests every month. Now it is zero. Our staff handle it themselves seamlessly, and HR can focus on actual strategic work.”',
-    name: 'Mrs. Ngozi A.',
-    role: 'Head of HR',
-    source: 'from Verified Partner',
-  },
-  {
-    quote:
       '“It has helped me so much. I know exactly what I am entitled to and can borrow from my own earned salary rather than having to ask someone else or borrow from loan sharks.”',
     name: 'Mr. Emeka O.',
+    avatar: face('photo-1531384441138-2736e62e0919'),
     role: 'Senior Project Engineer',
     source: 'from Trustpilot',
   },
@@ -49,13 +57,15 @@ const testimonials: Testimonial[] = [
     quote:
       '“We rolled it out as an employee benefit and saw engagement and retention improve within the first quarter. It costs our business zero Naira, has zero balance-sheet risk, and means everything to our team.”',
     name: 'Mrs. Amaka U.',
+    avatar: face('photo-1523824921871-d6f1a15151f1'),
     role: 'Retail Group CEO',
     source: 'from Verified Partner',
   },
   {
     quote:
-      '“Zero IT integration required — we onboarded our entire workforce in under 48 hours. Our employees love having a dignified, private financial safety net they can trust.”',
+      '“Zero IT integration required. We onboarded our entire workforce in under 48 hours. Our employees love having a dignified, private financial safety net they can trust.”',
     name: 'Mr. Babatunde J.',
+    avatar: face('photo-1506277886164-e25aa3f4ef7f'),
     role: 'HR & People Lead',
     source: 'from Verified Partner',
   },
@@ -124,7 +134,7 @@ export default function Testimonials() {
         {/* Section Header with Navigation Arrows */}
         <div className="stream-t-header-wrap">
           <div className="stream-t-header">
-            <h2>Trusted by employees and HR teams</h2>
+            <h2>Trusted by Nigerian businesses</h2>
             <p className="sub">Real stories from companies and employees already on Digiit.</p>
           </div>
 
@@ -164,6 +174,7 @@ export default function Testimonials() {
                 {t.quote}
               </blockquote>
               <div className="stream-t-footer">
+                <img className="stream-t-avatar" src={t.avatar} alt="" width={44} height={44} loading="lazy" />
                 <span className="stream-t-author">
                   <strong>{t.name}</strong> – {t.role}
                 </span>

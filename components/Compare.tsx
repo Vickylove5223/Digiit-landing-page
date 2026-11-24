@@ -18,7 +18,7 @@ export default function Compare() {
       <div className="wrap">
         <div className="compare-header">
           <h2>Same payday. A very different month.</h2>
-          <p className="sub">Two companies, same salary day. One drains hours and trust — the other runs itself.</p>
+          <p className="sub">Two companies, same salary day. One drains hours and trust. The other runs itself.</p>
         </div>
       </div>
     </section>

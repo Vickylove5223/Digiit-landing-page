@@ -1,0 +1,16 @@
+# Digiit
+
+> Digiit (by FundiT Finance Limited) provides salary-backed loans for employees of partner organisations in Nigeria, repaid through payroll deduction, at zero cost and zero risk to the employer. No collateral, no paperwork.
+
+## Main pages
+- [Home](https://www.digiit.com.ng/): Overview of salary-backed loans for employees and employers
+- [About](https://www.digiit.com.ng/about): Company, mission and leadership
+- [Apply](https://www.digiit.com.ng/apply): Employee loan application and employer partnership registration
+- [Contact](https://www.digiit.com.ng/contact): Partnerships, demos and support (Victoria Island, Lagos)
+- [Blog](https://www.digiit.com.ng/blog): Articles on workplace financial wellness, HR and NDPR compliance
+
+## Policies
+- [Privacy Policy](https://www.digiit.com.ng/privacy)
+- [Data Protection Policy](https://www.digiit.com.ng/data-protection)
+- [Cookie Policy](https://www.digiit.com.ng/cookies)
+- [Complaints Policy](https://www.digiit.com.ng/complaints)

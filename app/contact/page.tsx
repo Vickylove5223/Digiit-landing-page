@@ -1,19 +1,17 @@
-import type { Metadata } from 'next'
+import { pageMeta } from '@/lib/seo'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import PromoBanner from '@/components/PromoBanner'
 import ContactForm from '@/components/ContactForm'
 
-export const metadata: Metadata = {
-  title: 'Contact Us — Partner with Digiit or Get Support',
+export const metadata = pageMeta({
+  title: 'Contact Us: Partner with Digiit or Get Support',
   description:
     'Get in touch with Digiit by FundiT Finance Limited. Speak to our corporate partnerships team, book a 15-minute live demo, or get employee support in Victoria Island, Lagos.',
-  openGraph: {
-    title: 'Contact Us | Digiit by FundiT',
-    description:
-      'We are here to help your team thrive. Reach out to our Victoria Island, Lagos office.',
-  },
-}
+  path: '/contact',
+  ogTitle: 'Contact Us | Digiit by FundiT',
+  ogDescription:
+    'We are here to help your team thrive. Reach out to our Victoria Island, Lagos office.',
+})
 
 export default function ContactPage() {
   return (
@@ -127,10 +125,10 @@ export default function ContactPage() {
 
             <div className="contact-map-card">
               <iframe
-                title="Digiit Victoria Island Lagos Office Map"
-                src="https://maps.google.com/maps?q=6+Babatunde+Jose+Street,+Victoria+Island,+Lagos,+Nigeria&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                title="Map showing FUNDiT Finance Company Limited, Victoria Island, Lagos"
+                src="https://maps.google.com/maps?q=FUNDiT+Finance+Company+Limited,+6+Babatunde+Jose+Street,+Victoria+Island,+Lagos,+Nigeria&t=&z=16&ie=UTF8&output=embed"
                 width="100%"
-                height="420"
+                height="440"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
@@ -141,7 +139,6 @@ export default function ContactPage() {
           </div>
         </section>
 
-        <PromoBanner />
       </main>
       <Footer />
     </>

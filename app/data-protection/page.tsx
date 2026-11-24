@@ -1,16 +1,15 @@
-import type { Metadata } from 'next'
+import { pageMeta } from '@/lib/seo'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import PromoBanner from '@/components/PromoBanner'
-export const metadata: Metadata = {
-  title: 'Data Protection Policy — NDPA & NDPR Security Standards | Digiit',
+export const metadata = pageMeta({
+  title: 'Data Protection Policy: NDPA & NDPR Security Standards',
   description:
     'Discover how Digiit by FundiT Finance Limited safeguards employee and corporate data under the Nigeria Data Protection Act 2023, utilizing bank-grade encryption and airtight confidentiality.',
-  openGraph: {
-    title: 'Data Protection Policy | Digiit by FundiT',
-    description: 'Our technical safeguards, NDPR compliance, and workplace privacy architecture.',
-  },
-}
+  path: '/data-protection',
+  ogTitle: 'Data Protection Policy | Digiit by FundiT',
+  ogDescription:
+    'Our technical safeguards, NDPR compliance, and workplace privacy architecture.',
+})
 
 export default function DataProtectionPage() {
   return (
@@ -37,7 +36,7 @@ export default function DataProtectionPage() {
             <article className="legal-content">
               <h2>1. Commitment &amp; Regulatory Framework</h2>
               <p>
-                <strong>FundiT Finance Limited</strong> (&ldquo;FundiT&rdquo;, operating the Digiit platform) recognizes that personal data &mdash; especially financial and employment details &mdash; is highly sensitive. We are fully committed to upholding the highest standards of data governance codified under the <strong>Nigeria Data Protection Act (NDPA) 2023</strong> and the <strong>Nigeria Data Protection Regulation (NDPR)</strong>.
+                <strong>FundiT Finance Limited</strong> (&ldquo;FundiT&rdquo;, operating the Digiit platform) recognizes that personal data (especially financial and employment details) is highly sensitive. We are fully committed to upholding the highest standards of data governance codified under the <strong>Nigeria Data Protection Act (NDPA) 2023</strong> and the <strong>Nigeria Data Protection Regulation (NDPR)</strong>.
               </p>
               <p>
                 Our data protection ethos guarantees that every Nigerian worker accessing salary-backed credit can do so with absolute peace of mind, knowing their sensitive details will never be exposed, shared without legal authority, or utilized for predatory debt collection.
@@ -135,7 +134,6 @@ export default function DataProtectionPage() {
             </article>
           </div>
         </section>
-        <PromoBanner />
       </main>
       <Footer />
     </>

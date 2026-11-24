@@ -90,7 +90,7 @@ export default function ApplicationForm() {
     const form = e.currentTarget
     const data = new FormData(form)
 
-    const payload: Record<string, any> = { mode }
+    const payload: Record<string, any> = { mode, website: (data.get('website') as string) || '' }
 
     if (mode === 'employer') {
       payload.company = (data.get('company') as string)?.trim() || ''
@@ -249,6 +249,11 @@ export default function ApplicationForm() {
           </div>
         ) : (
           <form className="contact-form" action="#" method="POST" onSubmit={handleSubmit}>
+            {/* Honeypot: hidden from people, filled in by spam bots */}
+            <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, overflow: 'hidden' }}>
+              <label htmlFor="ap-website">Leave this field empty</label>
+              <input id="ap-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+            </div>
             {/* Role Selection Radio Cards */}
             <div className="apply-tabs-wrap" role="radiogroup" aria-label="Select Application Type">
               <div

@@ -1,8 +1,11 @@
 import { LOGO_SRC } from '@/lib/logo'
+import PromoBanner from '@/components/PromoBanner'
 
 export default function Footer() {
   return (
     <footer className="footer-harmony">
+      {/* CTA banner is part of the footer so every page gets the same block */}
+      <PromoBanner />
       <div className="wrap foot-wrap">
         <div className="foot-grid">
           {/* Column 1: Headline, Logo, Socials */}

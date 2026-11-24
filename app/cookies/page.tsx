@@ -1,16 +1,15 @@
-import type { Metadata } from 'next'
+import { pageMeta } from '@/lib/seo'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import PromoBanner from '@/components/PromoBanner'
-export const metadata: Metadata = {
-  title: 'Cookie Policy — How Digiit Uses Cookies & Session Technologies',
+export const metadata = pageMeta({
+  title: 'Cookie Policy: How Digiit Uses Cookies & Session Technologies',
   description:
     'Learn how Digiit by FundiT Finance Limited uses essential session cookies, security tokens, and analytics to deliver a secure and smooth workplace loan portal.',
-  openGraph: {
-    title: 'Cookie Policy | Digiit by FundiT',
-    description: 'Our cookie practices: essential authentication, zero invasive ad tracking, and complete user control.',
-  },
-}
+  path: '/cookies',
+  ogTitle: 'Cookie Policy | Digiit by FundiT',
+  ogDescription:
+    'Our cookie practices: essential authentication, zero invasive ad tracking, and complete user control.',
+})
 
 export default function CookiePolicyPage() {
   return (
@@ -133,7 +132,7 @@ export default function CookiePolicyPage() {
               </p>
               <div className="legal-callout">
                 <p>
-                  <strong>FundiT Finance Limited &mdash; Digiit Platform</strong><br />
+                  <strong>FundiT Finance Limited, Digiit Platform</strong><br />
                   6, Babatunde Jose Street, Off Ademola Adetokunbo, Victoria Island, Lagos, Nigeria.<br />
                   <strong>Email:</strong> <a href="mailto:support@digiit.ng" style={{ color: 'var(--indigo)', fontWeight: 600 }}>support@digiit.ng</a> &amp; <a href="mailto:dpo@digiit.ng" style={{ color: 'var(--indigo)', fontWeight: 600 }}>dpo@digiit.ng</a><br />
                   <strong>Phone:</strong> 07086429380
@@ -142,7 +141,6 @@ export default function CookiePolicyPage() {
             </article>
           </div>
         </section>
-        <PromoBanner />
       </main>
       <Footer />
     </>

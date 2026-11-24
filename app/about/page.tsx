@@ -1,18 +1,17 @@
-import type { Metadata } from 'next'
+import { pageMeta } from '@/lib/seo'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import PromoBanner from '@/components/PromoBanner'
+import LeadersGrid from '@/components/LeadersGrid'
 
-export const metadata: Metadata = {
-  title: 'About Us — Reimagining Employee Financial Dignity | Digiit',
+export const metadata = pageMeta({
+  title: 'About Us: Reimagining Employee Financial Dignity',
   description:
     'We are a digital-led finance company, changing the way people and businesses access credit. Powered by Digiit.',
-  openGraph: {
-    title: 'About Us — Digiit',
-    description:
-      'We are a digital-led finance company, changing the way people and businesses access credit across Nigeria.',
-  },
-}
+  path: '/about',
+  ogTitle: 'About Us | Digiit',
+  ogDescription:
+    'We are a digital-led finance company, changing the way people and businesses access credit across Nigeria.',
+})
 
 export default function AboutPage() {
   return (
@@ -37,8 +36,11 @@ export default function AboutPage() {
 
             <div className="fdt-hero-img-box" style={{ boxShadow: 'none' }}>
               <img
-                src="/about-hero.png"
+                src="/images/about-hero.webp"
                 alt="Our team at Digiit"
+                width={1400}
+                height={1050}
+                fetchPriority="high"
                 className="fdt-hero-img"
               />
             </div>
@@ -46,80 +48,50 @@ export default function AboutPage() {
         </section>
 
         {/* ================================================================
-            SECTION 2: MISSION & VISION
+            SECTION 2: PURPOSE (MISSION, VISION & CORE VALUES)
             ================================================================ */}
-        <section className="fdt-section fdt-mission-section">
+        <section className="fdt-section ab-purpose" aria-labelledby="ab-purpose-title">
           <div className="fdt-container">
-            <div className="fdt-mission-row">
-              <div className="fdt-mission-content">
-                <p className="fdt-mission-h2" style={{ marginBottom: '1.75rem' }}>
-                  Our mission is to provide innovative and customer focused financial solutions, leveraging on technology and exceptional service delivery.
-                </p>
-                <p className="fdt-vision-p">
-                  And our vision is to be the non-bank lending provider of choice for every Nigerian.
-                </p>
-              </div>
+            <header className="ab-head">
+              <h2 id="ab-purpose-title">What drives everything we do</h2>
+              <p>Our mission, vision and values guide how we serve every employee and every company we partner with.</p>
+            </header>
+
+            <div className="ab-mv">
+              <article className="ab-mv-card ab-mv-card--mission">
+                <span className="ab-mv-ico" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="5" /><circle cx="12" cy="12" r="1.5" fill="currentColor" /></svg>
+                </span>
+                <h3>Our mission</h3>
+                <p>To provide innovative and customer-focused financial solutions, leveraging technology and exceptional service delivery.</p>
+              </article>
+              <article className="ab-mv-card ab-mv-card--vision">
+                <span className="ab-mv-ico" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg>
+                </span>
+                <h3>Our vision</h3>
+                <p>To be the non-bank lending provider of choice for every Nigerian.</p>
+              </article>
             </div>
-          </div>
-        </section>
 
-        {/* ================================================================
-            SECTION 3: WHO WE ARE & CORE VALUES
-            ================================================================ */}
-        <section className="fdt-section fdt-who-section">
-          <div className="fdt-container">
-            {/* Core Values */}
-            <div className="fdt-values-wrap">
-              <h3 className="fdt-values-label">Our core values:</h3>
-              <div className="fdt-values-grid">
-                <div className="fdt-val-item">
-                  <img src="https://fundit.com.ng/about/peopleFirst.svg" alt="People First" className="fdt-val-icon" />
-                  <div className="fdt-val-text">
-                    <h4>People First</h4>
-                    <p>We prioritize the needs, goals, and trust of our customers in every decision we make.</p>
-                  </div>
-                </div>
-
-                <div className="fdt-val-item">
-                  <img src="https://fundit.com.ng/about/trust.svg" alt="Integrity" className="fdt-val-icon" />
-                  <div className="fdt-val-text">
-                    <h4>Integrity</h4>
-                    <p>We operate with honesty and transparency &mdash; no hidden fees, no false promises.</p>
-                  </div>
-                </div>
-
-                <div className="fdt-val-item">
-                  <img src="https://fundit.com.ng/about/reputation.svg" alt="Excellence" className="fdt-val-icon" />
-                  <div className="fdt-val-text">
-                    <h4>Excellence</h4>
-                    <p>We strive to exceed expectations with world-class service and performance.</p>
-                  </div>
-                </div>
-
-                <div className="fdt-val-item">
-                  <img src="https://fundit.com.ng/about/disruption.svg" alt="Innovation" className="fdt-val-icon" />
-                  <div className="fdt-val-text">
-                    <h4>Innovation</h4>
-                    <p>We embrace technology and fresh thinking to deliver smarter financial solutions.</p>
-                  </div>
-                </div>
-
-                <div className="fdt-val-item">
-                  <img src="https://fundit.com.ng/about/target.svg" alt="Customer Centric" className="fdt-val-icon" />
-                  <div className="fdt-val-text">
-                    <h4>Customer Centric</h4>
-                    <p>We design every service around your needs, goals, and experience.</p>
-                  </div>
-                </div>
-
-                <div className="fdt-val-item">
-                  <img src="https://fundit.com.ng/about/professional-success.svg" alt="Professionalism" className="fdt-val-icon" />
-                  <div className="fdt-val-text">
-                    <h4>Professionalism</h4>
-                    <p>We deliver with quality, clarity, and consistent standards.</p>
-                  </div>
-                </div>
-              </div>
+            <div className="ab-values">
+              <h3 className="ab-values-title">What we stand for</h3>
+              <ul className="ab-values-grid">
+                {[
+                  ['peopleFirst.svg', 'People First', 'We prioritize the needs, goals, and trust of our customers in every decision we make.'],
+                  ['trust.svg', 'Integrity', 'We operate with honesty and transparency. No hidden fees, no false promises.'],
+                  ['reputation.svg', 'Excellence', 'We strive to exceed expectations with world-class service and performance.'],
+                  ['disruption.svg', 'Innovation', 'We embrace technology and fresh thinking to deliver smarter financial solutions.'],
+                  ['target.svg', 'Customer Centric', 'We design every service around your needs, goals, and experience.'],
+                  ['professional-success.svg', 'Professionalism', 'We deliver with quality, clarity, and consistent standards.'],
+                ].map(([icon, title, text]) => (
+                  <li key={title} className="ab-value">
+                    <span className="ab-value-ico"><img src={`/images/values/${icon}`} alt="" width={40} height={40} loading="lazy" /></span>
+                    <h4>{title}</h4>
+                    <p>{text}</p>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
@@ -140,99 +112,10 @@ export default function AboutPage() {
               </div>
             </header>
 
-            <div className="fdt-leaders-grid">
-              {/* Leader 1 */}
-              <div className="fdt-leader-card">
-                <div className="fdt-leader-photo-box">
-                  <img
-                    src="https://fundit.com.ng/_next/image?url=%2Fleadership%2Fchairman.png&w=640&q=75"
-                    alt="Olaleye Adebiyi"
-                    className="fdt-leader-photo"
-                  />
-                </div>
-                <div className="fdt-leader-meta">
-                  <div>
-                    <h3 className="fdt-leader-name">Olaleye Adebiyi</h3>
-                    <p className="fdt-leader-role">Chairman</p>
-                  </div>
-                  <button type="button" className="fdt-leader-circle-btn" aria-label="View details for Olaleye Adebiyi">
-                    <svg viewBox="0 0 16 16" width="28" height="28" fill="currentColor">
-                      <path fillRule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.854 5.146a.5.5 0 1 0-.708.708L9.243 9.95H6.475a.5.5 0 1 0 0 1h3.975a.5.5 0 0 0 .5-.5V6.475a.5.5 0 1 0-1 0v2.768z" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-              {/* Leader 2 */}
-              <div className="fdt-leader-card">
-                <div className="fdt-leader-photo-box">
-                  <img
-                    src="https://fundit.com.ng/_next/image?url=%2Fleadership%2Fmd.png&w=640&q=75"
-                    alt="Wole Ajomale"
-                    className="fdt-leader-photo"
-                  />
-                </div>
-                <div className="fdt-leader-meta">
-                  <div>
-                    <h3 className="fdt-leader-name">Wole Ajomale</h3>
-                    <p className="fdt-leader-role">Managing Director</p>
-                  </div>
-                  <button type="button" className="fdt-leader-circle-btn" aria-label="View details for Wole Ajomale">
-                    <svg viewBox="0 0 16 16" width="28" height="28" fill="currentColor">
-                      <path fillRule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.854 5.146a.5.5 0 1 0-.708.708L9.243 9.95H6.475a.5.5 0 1 0 0 1h3.975a.5.5 0 0 0 .5-.5V6.475a.5.5 0 1 0-1 0v2.768z" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-              {/* Leader 3 */}
-              <div className="fdt-leader-card">
-                <div className="fdt-leader-photo-box">
-                  <img
-                    src="https://fundit.com.ng/_next/image?url=%2Fleadership%2Fed.png&w=640&q=75"
-                    alt="Bolaji Shenjobi"
-                    className="fdt-leader-photo"
-                  />
-                </div>
-                <div className="fdt-leader-meta">
-                  <div>
-                    <h3 className="fdt-leader-name">Bolaji Shenjobi</h3>
-                    <p className="fdt-leader-role">Executive Director</p>
-                  </div>
-                  <button type="button" className="fdt-leader-circle-btn" aria-label="View details for Bolaji Shenjobi">
-                    <svg viewBox="0 0 16 16" width="28" height="28" fill="currentColor">
-                      <path fillRule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.854 5.146a.5.5 0 1 0-.708.708L9.243 9.95H6.475a.5.5 0 1 0 0 1h3.975a.5.5 0 0 0 .5-.5V6.475a.5.5 0 1 0-1 0v2.768z" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-              {/* Leader 4 */}
-              <div className="fdt-leader-card">
-                <div className="fdt-leader-photo-box">
-                  <img
-                    src="https://fundit.com.ng/_next/image?url=%2Fleadership%2Fumma.png&w=640&q=75"
-                    alt="Umma Yusuf Aboki"
-                    className="fdt-leader-photo"
-                  />
-                </div>
-                <div className="fdt-leader-meta">
-                  <div>
-                    <h3 className="fdt-leader-name">Umma Yusuf Aboki</h3>
-                    <p className="fdt-leader-role">Independent Non-Executive Director (INED)</p>
-                  </div>
-                  <button type="button" className="fdt-leader-circle-btn" aria-label="View details for Umma Yusuf Aboki">
-                    <svg viewBox="0 0 16 16" width="28" height="28" fill="currentColor">
-                      <path fillRule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.854 5.146a.5.5 0 1 0-.708.708L9.243 9.95H6.475a.5.5 0 1 0 0 1h3.975a.5.5 0 0 0 .5-.5V6.475a.5.5 0 1 0-1 0v2.768z" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
+            <LeadersGrid />
           </div>
         </section>
 
-        <PromoBanner />
       </main>
       <Footer />
     </>

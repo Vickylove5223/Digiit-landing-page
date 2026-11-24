@@ -1,16 +1,15 @@
-import type { Metadata } from 'next'
+import { pageMeta } from '@/lib/seo'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import PromoBanner from '@/components/PromoBanner'
-export const metadata: Metadata = {
-  title: 'Privacy Policy — How Digiit Protects Your Personal & Financial Data',
+export const metadata = pageMeta({
+  title: 'Privacy Policy: How Digiit Protects Your Personal & Financial Data',
   description:
     'Read the Digiit Privacy Policy. Learn how FundiT Finance Limited collects, uses, and safeguards employee and corporate data under the Nigeria Data Protection Act (NDPA) and NDPR.',
-  openGraph: {
-    title: 'Privacy Policy | Digiit by FundiT',
-    description: 'Our commitment to employee privacy, zero contact-scraping, and strict NDPR data compliance.',
-  },
-}
+  path: '/privacy',
+  ogTitle: 'Privacy Policy | Digiit by FundiT',
+  ogDescription:
+    'Our commitment to employee privacy, zero contact-scraping, and strict NDPR data compliance.',
+})
 
 export default function PrivacyPolicyPage() {
   return (
@@ -172,7 +171,7 @@ export default function PrivacyPolicyPage() {
                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                     <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                   </svg>
-                  Office of the Data Protection Officer &mdash; FundiT Finance Limited
+                  Office of the Data Protection Officer, FundiT Finance Limited
                 </div>
                 <p>
                   <strong>Address:</strong> 6, Babatunde Jose Street, Off Ademola Adetokunbo, Victoria Island, Lagos, Nigeria.<br />
@@ -184,7 +183,6 @@ export default function PrivacyPolicyPage() {
             </article>
           </div>
         </section>
-        <PromoBanner />
       </main>
       <Footer />
     </>

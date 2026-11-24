@@ -35,10 +35,6 @@ export default function BlogListing() {
             />
           </div>
           <div className="blog-featured-body">
-            <div className="blog-card-meta">
-              <span className="blog-read-time">{featuredPost.readTime}</span>
-              <span className="blog-read-time">&middot; {featuredPost.date}</span>
-            </div>
             <h2 className="blog-featured-title">{featuredPost.title}</h2>
             <p className="blog-featured-excerpt">{featuredPost.excerpt}</p>
           </div>
@@ -57,8 +53,10 @@ export default function BlogListing() {
               />
             </div>
             <div className="blog-card-body">
+              <div className="blog-card-info">
+                <span>{post.category}</span>
+              </div>
               <h3 className="blog-card-title">{post.title}</h3>
-              <p className="blog-card-excerpt">{post.excerpt}</p>
             </div>
           </a>
         ))}

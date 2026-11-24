@@ -1,18 +1,17 @@
-import type { Metadata } from 'next'
+import { pageMeta } from '@/lib/seo'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import PromoBanner from '@/components/PromoBanner'
 import ApplicationForm from '@/components/ApplicationForm'
 
-export const metadata: Metadata = {
-  title: 'Apply Now — Workplace Loans for Employees & Employer Partnership | Digiit',
+export const metadata = pageMeta({
+  title: 'Apply Now: Workplace Loans for Employees & Employer Partnership',
   description:
     'Apply for a salary-backed loan or register your organization as a corporate partner with Digiit. Fast, confidential, and 100% compliant.',
-  openGraph: {
-    title: 'Apply Now | Digiit',
-    description: 'Instant salary-backed credit for employees and zero-liability partnership for Nigerian employers.',
-  },
-}
+  path: '/apply',
+  ogTitle: 'Apply Now | Digiit',
+  ogDescription:
+    'Instant salary-backed credit for employees and zero-liability partnership for Nigerian employers.',
+})
 
 export default function ApplyPage() {
   return (
@@ -41,7 +40,6 @@ export default function ApplyPage() {
           </div>
         </section>
 
-        <PromoBanner />
       </main>
       <Footer />
     </>

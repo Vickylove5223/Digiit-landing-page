@@ -45,6 +45,7 @@ export default function ContactForm() {
           phone,
           company,
           message,
+          website: (data.get('website') as string) || '',
         }),
       })
 
@@ -151,6 +152,11 @@ export default function ContactForm() {
         </div>
       ) : (
         <form className="contact-form" action="#" method="POST" onSubmit={handleSubmit}>
+            {/* Honeypot: hidden from people, filled in by spam bots */}
+            <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, overflow: 'hidden' }}>
+              <label htmlFor="ct-website">Leave this field empty</label>
+              <input id="ct-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+            </div>
           {error && (
             <div
               style={{

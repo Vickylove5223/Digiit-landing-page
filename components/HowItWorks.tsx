@@ -10,19 +10,19 @@ const steps: Step[] = [
     step: 'Step 1',
     color: '#27398a', // Digiit Indigo
     title: 'Onboard in 48 Hours',
-    desc: 'Share your employee roster and sign one simple agreement. Zero IT or software integration required.',
+    desc: 'Your company signs a legal agreement with us, then fills in our company and staff onboarding form to get started.',
   },
   {
     step: 'Step 2',
     color: '#ef3932', // Digiit Coral Red
     title: 'Zero HR Touchpoints',
-    desc: 'Staff self-serve confidential salary loans in under 3 minutes. HR never handles requests or approvals.',
+    desc: 'Staff activate their Digiit account and can start getting loans in under 3 minutes.',
   },
   {
     step: 'Step 3',
     color: '#f59e0b', // Warm Gold
     title: 'Instant Disbursement',
-    desc: 'Funds credit directly to staff bank accounts via licensed partners with zero employer balance sheet liability.',
+    desc: "Funds are credited directly to the staff member's bank account in under 2 minutes, with zero liability to the employer.",
   },
   {
     step: 'Step 4',

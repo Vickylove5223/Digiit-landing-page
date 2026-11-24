@@ -50,7 +50,7 @@ export const BLOG_POSTS: BlogPost[] = [
         {
           heading: 'The Mid-Month Reality in Nigeria',
           body: [
-            'Payday comes once every thirty days. Life emergencies &mdash; unexpected medical bills, urgent home repairs, school fees deadlines, and transport hikes &mdash; do not adhere to payroll schedules.',
+            'Payday comes once every thirty days. Life emergencies (unexpected medical bills, urgent home repairs, school fees deadlines, and transport hikes) do not adhere to payroll schedules.',
             'When commercial banks require weeks of processing and physical collateral that most salary earners do not possess, employees frequently turn to quick digital loan apps out of pure desperation. Within weeks, compounding daily interest rates of 1% to 2% turn a modest ₦50,000 emergency into an unmanageable ₦180,000 debt cycle.',
           ],
           quote: 'Asking for credit to handle a legitimate family emergency is not a character flaw. It is an economic reality of modern urban life.',
@@ -141,7 +141,7 @@ export const BLOG_POSTS: BlogPost[] = [
     readTime: '7 min read',
     image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&auto=format&fit=crop&q=80',
     content: {
-      intro: 'With the enactment of the Nigeria Data Protection Act (NDPA) 2023, data governance is no longer just an IT concern &mdash; it is an executive boardroom priority. Corporate HR departments that collect, store, and process staff financial requests must ensure rigorous compliance.',
+      intro: 'With the enactment of the Nigeria Data Protection Act (NDPA) 2023, data governance is no longer just an IT concern. It is an executive boardroom priority. Corporate HR departments that collect, store, and process staff financial requests must ensure rigorous compliance.',
       sections: [
         {
           heading: 'The Vulnerability of Paper-Based Staff Loans',
@@ -232,4 +232,25 @@ export function getAllPosts(): BlogPost[] {
 
 export function getRelatedPosts(currentSlug: string, count = 2): BlogPost[] {
   return BLOG_POSTS.filter((p) => p.slug !== currentSlug).slice(0, count)
+}
+
+// "Oct 24, 2026" -> "24.10.26" (falls back to the original text)
+export function formatShortDate(d: string): string {
+  const t = new Date(d)
+  if (isNaN(t.getTime())) return d
+  const p = (n: number) => String(n).padStart(2, '0')
+  return `${p(t.getDate())}.${p(t.getMonth() + 1)}.${String(t.getFullYear()).slice(-2)}`
+}
+
+// "Why Salary Loans Work" -> "why-salary-loans-work" (used for in-page heading links)
+export function slugifyHeading(text: string): string {
+  return text.toLowerCase().replace(/<[^>]+>/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+}
+
+// "Oct 24, 2026" -> "2026-10-24" (machine-readable for <time> and structured data)
+export function toIsoDate(d: string): string {
+  const t = new Date(d)
+  if (isNaN(t.getTime())) return d
+  const p = (n: number) => String(n).padStart(2, '0')
+  return `${t.getFullYear()}-${p(t.getMonth() + 1)}-${p(t.getDate())}`
 }

@@ -1,16 +1,15 @@
-import type { Metadata } from 'next'
+import { pageMeta } from '@/lib/seo'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import PromoBanner from '@/components/PromoBanner'
-export const metadata: Metadata = {
-  title: 'Complaints Policy — Consumer Protection & Dispute Resolution | Digiit',
+export const metadata = pageMeta({
+  title: 'Complaints Policy: Consumer Protection & Dispute Resolution',
   description:
     'Read the Digiit Complaints Handling and Dispute Resolution Policy. Learn our transparent 3-stage process for resolving employee and employer inquiries fairly and rapidly.',
-  openGraph: {
-    title: 'Complaints Policy | Digiit by FundiT',
-    description: 'Our dispute resolution framework: 24-hour response pledge, fair hearings, and transparent escalation tiers.',
-  },
-}
+  path: '/complaints',
+  ogTitle: 'Complaints Policy | Digiit by FundiT',
+  ogDescription:
+    'Our dispute resolution framework: 24-hour response pledge, fair hearings, and transparent escalation tiers.',
+})
 
 export default function ComplaintsPolicyPage() {
   return (
@@ -149,7 +148,7 @@ export default function ComplaintsPolicyPage() {
               </p>
               <ul>
                 <li>
-                  <strong>Central Bank of Nigeria (CBN) &mdash; Consumer Protection Department:</strong><br />
+                  <strong>Central Bank of Nigeria (CBN), Consumer Protection Department:</strong><br />
                   Central Business District, Garki, Abuja, Nigeria.<br />
                   Email: <code>cpd@cbn.gov.ng</code>
                 </li>
@@ -178,7 +177,6 @@ export default function ComplaintsPolicyPage() {
             </article>
           </div>
         </section>
-        <PromoBanner />
       </main>
       <Footer />
     </>

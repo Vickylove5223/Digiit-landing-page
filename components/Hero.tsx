@@ -110,7 +110,7 @@ export default function Hero({ variant = 'center' }: { variant?: 'center' | 'spl
           </div>
         </div>
         <div className="hero-crowd" aria-hidden="true">
-          {[0, 1].map(i => <img key={i} src="/hero-image.png" alt="" />)}
+          {[0, 1].map(i => <img key={i} src="/images/hero-image.webp" alt="" width={1600} height={781} fetchPriority={i === 0 ? 'high' : 'low'} decoding="async" />)}
         </div>
       </section>
     )
@@ -126,8 +126,11 @@ export default function Hero({ variant = 'center' }: { variant?: 'center' | 'spl
 
       <div className="hero-img-wrap">
         <img
-          src="/hero-image.png"
-          alt="Industrial designers working on a 3D model"
+          src="/images/hero-image.webp"
+          alt="Nigerian professionals at work"
+          width={1600}
+          height={781}
+          fetchPriority="high"
           className="hero-img"
         />
         <div className="hero-app-card">

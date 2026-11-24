@@ -2,13 +2,13 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import PromoBanner from '@/components/PromoBanner'
-import { getPostBySlug, getAllPosts, getRelatedPosts } from '@/lib/blog'
+import ShareButtons from '@/components/ShareButtons'
+import JsonLd from '@/components/JsonLd'
+import { getPostBySlug, getAllPosts, getRelatedPosts, slugifyHeading, toIsoDate } from '@/lib/blog'
+import { pageMeta, SITE_URL } from '@/lib/seo'
 
 interface PageProps {
-  params: {
-    slug: string
-  }
+  params: Promise<{ slug: string }>
 }
 
 export function generateStaticParams() {
@@ -17,174 +17,167 @@ export function generateStaticParams() {
   }))
 }
 
-export function generateMetadata({ params }: PageProps): Metadata {
-  const post = getPostBySlug(params.slug)
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params
+  const post = getPostBySlug(slug)
   if (!post) {
-    return { title: 'Article Not Found — Digiit' }
+    return { title: 'Article Not Found', robots: { index: false, follow: true } }
   }
 
-  return {
-    title: `${post.title} — Digiit Blog`,
+  return pageMeta({
+    title: post.title,
     description: post.excerpt,
-    openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      images: [{ url: post.image, alt: post.title }],
-      type: 'article',
-      publishedTime: post.date,
-      authors: [post.author.name],
-    },
-  }
+    path: `/blog/${post.slug}`,
+    ogTitle: post.title,
+    image: { url: post.image, alt: post.title, width: 1200, height: 800 },
+    type: 'article',
+    publishedTime: toIsoDate(post.date),
+    authors: [post.author.name],
+  })
 }
 
-export default function SinglePostPage({ params }: PageProps) {
-  const post = getPostBySlug(params.slug)
+export default async function SinglePostPage({ params }: PageProps) {
+  const { slug } = await params
+  const post = getPostBySlug(slug)
 
   if (!post) {
     notFound()
   }
 
-  const relatedPosts = getRelatedPosts(post.slug, 2)
+  const relatedPosts = getRelatedPosts(post.slug, 3)
+  const sections = post.content.sections.map((section) => ({ ...section, id: slugifyHeading(section.heading) }))
+
+  const articleLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BlogPosting',
+        headline: post.title,
+        description: post.excerpt,
+        image: [post.image],
+        datePublished: toIsoDate(post.date),
+        dateModified: toIsoDate(post.date),
+        author: { '@type': 'Person', name: post.author.name, jobTitle: post.author.role },
+        publisher: { '@id': `${SITE_URL}/#organization` },
+        mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,
+        articleSection: post.category,
+        inLanguage: 'en-NG',
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+          { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE_URL}/blog` },
+          { '@type': 'ListItem', position: 3, name: post.title, item: `${SITE_URL}/blog/${post.slug}` },
+        ],
+      },
+    ],
+  }
 
   return (
     <>
+      <JsonLd data={articleLd} />
       <Header />
-      <main id="top" className="blog-page-main">
-        {/* Post Header */}
-        <section className="post-header">
-          <div className="wrap">
-            <div className="post-header-inner">
-              <div className="post-header-top">
-                <a href="/blog" className="post-back-btn">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <polyline points="15 18 9 12 15 6" />
-                  </svg>
-                  Back to Insights
-                </a>
-              </div>
+      <main id="top" className="art-page">
+        <div className="art-hero">
+        {/* Title */}
+        <header className="art-head wrap">
+          <a href="/blog" className="art-back">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6" /></svg>
+            All articles
+          </a>
+          <h1 className="art-title">{post.title}</h1>
+        </header>
 
-              <h1 className="post-title">{post.title}</h1>
-
-              {/* Author & Share Bar */}
-              <div className="post-author-bar">
-                <div className="post-author-info">
-                  <img
-                    src={post.author.avatar}
-                    alt={post.author.name}
-                    className="post-author-img"
-                  />
-                  <div>
-                    <strong style={{ display: 'block', fontSize: '1rem', color: '#ffffff' }}>
-                      {post.author.name}
-                    </strong>
-                    <span style={{ fontSize: '0.8125rem', color: 'rgba(255, 255, 255, 0.72)' }}>
-                      {post.author.role}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Post Cover Visual */}
-              <div className="post-cover-wrap">
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  className="post-cover-img"
-                />
-              </div>
+        {/* Meta row: date & read time | category | share */}
+        <div className="art-meta wrap">
+          <div className="art-meta-author">
+            <img src={post.author.avatar} alt="" width={40} height={40} />
+            <div>
+              <strong>{post.author.name}</strong>
+              <span className="art-meta-date">Product Expert at FUNDiT</span>
             </div>
           </div>
-        </section>
+          <ShareButtons title={post.title} path={`/blog/${post.slug}`} />
+        </div>
 
-        {/* Post Article Body & Sticky Sidebar */}
-        <div className="post-layout">
-          {/* Main Article Content */}
-          <article className="post-article">
-            <p className="post-intro-text">
-              {post.content.intro}
-            </p>
+        </div>
 
-            {post.content.sections.map((section, idx) => (
-              <div key={idx} style={{ marginTop: '2rem' }}>
+        {/* Full-width cover */}
+        <figure className="art-cover">
+          <img src={post.image} alt={post.title} width={1200} height={800} fetchPriority="high" decoding="async" />
+        </figure>
+
+        {/* Contents + article */}
+        <div className="art-body wrap">
+          {sections.length > 0 && (
+            <nav className="art-toc" aria-label="In this story">
+              <span className="art-toc-label">In this story</span>
+              <ol>
+                {sections.map((section) => (
+                  <li key={section.id}><a href={`#${section.id}`}>{section.heading}</a></li>
+                ))}
+              </ol>
+            </nav>
+          )}
+
+          <article className="art-prose">
+            <p className="art-intro">{post.content.intro}</p>
+
+            {sections.map((section) => (
+              <section key={section.id} id={section.id} className="art-section">
                 <h2>{section.heading}</h2>
-
                 {section.body.map((para, pIdx) => (
                   <p key={pIdx} dangerouslySetInnerHTML={{ __html: para }} />
                 ))}
-
-                {section.quote && (
-                  <blockquote>
-                    &ldquo;{section.quote}&rdquo;
-                  </blockquote>
-                )}
-
+                {section.quote && <blockquote>&ldquo;{section.quote}&rdquo;</blockquote>}
                 {section.callout && (
-                  <div className="legal-callout">
-                    <div className="legal-callout-title">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <circle cx="12" cy="12" r="10" />
-                        <line x1="12" y1="16" x2="12" y2="12" />
-                        <line x1="12" y1="8" x2="12.01" y2="8" />
-                      </svg>
-                      {section.callout.title}
-                    </div>
+                  <aside className="art-callout">
+                    <strong>{section.callout.title}</strong>
                     <p>{section.callout.text}</p>
-                  </div>
+                  </aside>
                 )}
-              </div>
+              </section>
             ))}
 
-            {/* Key Takeaways Card */}
             {post.content.takeaways && post.content.takeaways.length > 0 && (
-              <div className="post-takeaways-card">
-                <h3>
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                  Key Takeaways
-                </h3>
-                <ul className="post-takeaways-list">
-                  {post.content.takeaways.map((item, tIdx) => (
-                    <li key={tIdx}>
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
-                      <span>{item}</span>
-                    </li>
-                  ))}
+              <aside className="art-takeaways">
+                <h3>Key takeaways</h3>
+                <ul>
+                  {post.content.takeaways.map((item, tIdx) => <li key={tIdx}>{item}</li>)}
                 </ul>
-              </div>
+              </aside>
             )}
+
+            <div className="art-author">
+              <img src={post.author.avatar} alt="" width={48} height={48} loading="lazy" decoding="async" />
+              <div>
+                <strong>{post.author.name}</strong>
+                <span>{post.author.role}</span>
+              </div>
+            </div>
           </article>
         </div>
 
-        {/* Related Articles Section */}
+        {/* More stories */}
         {relatedPosts.length > 0 && (
-          <section className="post-related-section">
+          <section className="art-more">
             <div className="wrap">
-              <div style={{ marginBottom: '2.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}>
-                <div>
-                  <span className="label">Recommended Reading</span>
-                  <h2 style={{ fontFamily: 'var(--f-display)', fontSize: 'clamp(1.7rem, 2.5vw, 2.2rem)', color: 'var(--ink)' }}>
-                    Related Articles
-                  </h2>
-                </div>
-                <a href="/blog" className="btn btn-ghost" style={{ fontSize: '0.9rem', padding: '0.65rem 1.3rem' }}>
-                  View all articles &rarr;
-                </a>
+              <div className="art-more-head">
+                <h2>More stories</h2>
+                <a href="/blog">View all articles &rarr;</a>
               </div>
-
               <div className="blog-grid" style={{ marginBottom: 0 }}>
                 {relatedPosts.map((rPost) => (
                   <a key={rPost.slug} href={`/blog/${rPost.slug}`} className="blog-card">
                     <div className="blog-card-img-wrap">
-                      <img
-                        src={rPost.image}
-                        alt={rPost.title}
-                        className="blog-card-img"
-                      />
+                      <img src={rPost.image} alt={rPost.title} className="blog-card-img" width={600} height={400} loading="lazy" decoding="async" />
                     </div>
                     <div className="blog-card-body">
+                      <div className="blog-card-info">
+                        <span>{rPost.category}</span>
+                      </div>
                       <h3 className="blog-card-title">{rPost.title}</h3>
-                      <p className="blog-card-excerpt">{rPost.excerpt}</p>
                     </div>
                   </a>
                 ))}
@@ -192,7 +185,6 @@ export default function SinglePostPage({ params }: PageProps) {
             </div>
           </section>
         )}
-        <PromoBanner />
       </main>
       <Footer />
     </>

@@ -91,7 +91,7 @@ export default function Problem({ showCompare, hideSlider }: { showCompare?: boo
             </svg>
             <h2>Note, your people are borrowing, <br />why not make it safe &amp; cheaper for them.</h2>
             <p className="sub">
-              When pay runs out before the month does, staff turn to loan apps or ask HR for an
+              When money runs out before the month does, staff turn to loan apps or ask HR for an
               advance. Both cost your business: <mark>in focus, in time and in trust.</mark>
             </p>
             <div className="cmp">
@@ -128,7 +128,7 @@ export default function Problem({ showCompare, hideSlider }: { showCompare?: boo
           <>
             <h2>Your people are borrowing. Make it safe &amp; cheaper.</h2>
             <p className="sub">
-              When pay runs out before the month does, staff turn to loan apps or ask HR for an
+              When money runs out before the month does, staff turn to loan apps or ask HR for an
               advance. Both cost your business: in focus, in time and in trust.
             </p>
           </>

@@ -1,18 +1,17 @@
-import type { Metadata } from 'next'
+import { pageMeta } from '@/lib/seo'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import BlogListing from '@/components/BlogListing'
-import PromoBanner from '@/components/PromoBanner'
 
-export const metadata: Metadata = {
-  title: 'Blog & Workplace Insights — Employee Financial Health & HR Trends',
+export const metadata = pageMeta({
+  title: 'Blog & Workplace Insights: Employee Financial Health & HR Trends',
   description:
     'Expert articles, guides, and thought leadership from Digiit. Discover strategies for reducing staff turnover, promoting financial wellness, and navigating NDPR compliance.',
-  openGraph: {
-    title: 'Blog & Insights | Digiit',
-    description: 'Expert thought leadership on workplace financial wellness and corporate lending in Nigeria.',
-  },
-}
+  path: '/blog',
+  ogTitle: 'Blog & Insights | Digiit',
+  ogDescription:
+    'Expert thought leadership on workplace financial wellness and corporate lending in Nigeria.',
+})
 
 export default function BlogPage() {
   return (
@@ -42,7 +41,6 @@ export default function BlogPage() {
           </div>
         </section>
 
-        <PromoBanner />
       </main>
       <Footer />
     </>

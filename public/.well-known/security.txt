@@ -1,0 +1,6 @@
+Contact: mailto:support@digiit.ng
+Contact: https://www.digiit.com.ng/contact
+Expires: 2027-11-24T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://www.digiit.com.ng/.well-known/security.txt
+Policy: https://www.digiit.com.ng/data-protection

@@ -6,7 +6,7 @@ export default function About() {
           <span className="label">About Digiit</span>
           <h2>Built to empower Nigeria&apos;s workforce with dignified financial access.</h2>
           <p className="sub">
-            Digiit by FundiT Finance Limited connects forward-thinking employers and licensed financial partners to provide instant, confidential, salary-backed loans — eliminating predatory interest rates, employer liability, and workplace embarrassment.
+            Digiit by FundiT Finance Limited connects forward-thinking employers and licensed financial partners to provide instant, confidential, salary-backed loans, eliminating predatory interest rates, employer liability, and workplace embarrassment.
           </p>
           <div style={{ marginTop: '1.75rem', display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <a href="/about" className="btn btn-primary">

@@ -1,7 +1,6 @@
 import { ImageResponse } from 'next/og'
 
-export const runtime = 'edge'
-export const alt = 'Digiit — Empower Your People. Power Your Business.'
+export const alt = 'Digiit: Empower Your People. Power Your Business.'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -55,9 +54,13 @@ export default function OgImage() {
             maxWidth: 900,
             marginBottom: '28px',
             letterSpacing: '-1.5px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
           }}
         >
-          Empower Your People.<br />Power Your Business.
+          <span>Empower Your People.</span>
+          <span>Power Your Business.</span>
         </div>
 
         <div
@@ -70,7 +73,7 @@ export default function OgImage() {
             marginBottom: '48px',
           }}
         >
-          Instant salary-backed loans for your staff — zero cost, zero risk to your organisation.
+          Instant salary-backed loans for your staff. Zero cost, zero risk to your organisation.
         </div>
 
         {/* pill badges */}
