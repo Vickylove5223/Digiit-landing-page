@@ -1,4 +1,5 @@
 'use client'
+import { withBase } from '@/lib/paths'
 import { useState } from 'react'
 import { LOGO_SRC } from '@/lib/logo'
 
@@ -14,13 +15,13 @@ export default function Header() {
   return (
     <header className="top">
       <div className="wrap nav">
-        <a className="logo" href="/" aria-label="Digiit by FundiT, home">
-          <img src={LOGO_SRC} alt="Digiit by FundiT" width={50} height={22} />
+        <a className="logo" href={withBase('/')} aria-label="Digiit by FundiT, home">
+          <img src={withBase(LOGO_SRC)} alt="Digiit by FundiT" width={50} height={22} />
         </a>
         <ul id="menu" className={open ? 'open' : undefined}>
-          <li><a href="/" onClick={close}>Home</a></li>
-          <li><a href="/about" onClick={close}>About us</a></li>
-          <li><a href="/contact" onClick={close}>Contact us</a></li>
+          <li><a href={withBase('/')} onClick={close}>Home</a></li>
+          <li><a href={withBase('/about')} onClick={close}>About us</a></li>
+          <li><a href={withBase('/contact')} onClick={close}>Contact us</a></li>
           <li className={`nav-dropdown ${legalOpen ? 'open' : ''}`}>
             <button
               type="button"
@@ -35,23 +36,23 @@ export default function Header() {
               </svg>
             </button>
             <div className="nav-dropdown-menu" role="menu">
-              <a href="/privacy" className="nav-dropdown-link" role="menuitem" onClick={close}>
+              <a href={withBase('/privacy')} className="nav-dropdown-link" role="menuitem" onClick={close}>
                 Privacy Policy
               </a>
-              <a href="/cookies" className="nav-dropdown-link" role="menuitem" onClick={close}>
+              <a href={withBase('/cookies')} className="nav-dropdown-link" role="menuitem" onClick={close}>
                 Cookie Policy
               </a>
-              <a href="/data-protection" className="nav-dropdown-link" role="menuitem" onClick={close}>
+              <a href={withBase('/data-protection')} className="nav-dropdown-link" role="menuitem" onClick={close}>
                 Data Protection
               </a>
-              <a href="/complaints" className="nav-dropdown-link" role="menuitem" onClick={close}>
+              <a href={withBase('/complaints')} className="nav-dropdown-link" role="menuitem" onClick={close}>
                 Complaints Policy
               </a>
             </div>
           </li>
-          <li><a href="/blog" onClick={close}>Blog</a></li>
+          <li><a href={withBase('/blog')} onClick={close}>Blog</a></li>
         </ul>
-        <a className="btn" href="/apply">Apply now</a>
+        <a className="btn" href={withBase('/apply')}>Apply now</a>
         <button
           className="menu-btn"
           id="menuBtn"

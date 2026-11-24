@@ -1,3 +1,4 @@
+import { withBase } from '@/lib/paths'
 import { pageMeta } from '@/lib/seo'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -36,7 +37,7 @@ export default function AboutPage() {
 
             <div className="fdt-hero-img-box" style={{ boxShadow: 'none' }}>
               <img
-                src="/images/about-hero.webp"
+                src={withBase('/images/about-hero.webp')}
                 alt="Our team at Digiit"
                 width={1400}
                 height={1050}
@@ -86,7 +87,7 @@ export default function AboutPage() {
                   ['professional-success.svg', 'Professionalism', 'We deliver with quality, clarity, and consistent standards.'],
                 ].map(([icon, title, text]) => (
                   <li key={title} className="ab-value">
-                    <span className="ab-value-ico"><img src={`/images/values/${icon}`} alt="" width={40} height={40} loading="lazy" /></span>
+                    <span className="ab-value-ico"><img src={withBase(`/images/values/${icon}`)} alt="" width={40} height={40} loading="lazy" /></span>
                     <h4>{title}</h4>
                     <p>{text}</p>
                   </li>

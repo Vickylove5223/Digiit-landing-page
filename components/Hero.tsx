@@ -1,3 +1,4 @@
+import { withBase } from '@/lib/paths'
 import AvatarCycle from './AvatarCycle'
 import { TALK_TO_SALES_WHATSAPP_URL } from '@/lib/whatsapp'
 
@@ -110,7 +111,7 @@ export default function Hero({ variant = 'center' }: { variant?: 'center' | 'spl
           </div>
         </div>
         <div className="hero-crowd" aria-hidden="true">
-          {[0, 1].map(i => <img key={i} src="/images/hero-image.webp" alt="" width={1600} height={781} fetchPriority={i === 0 ? 'high' : 'low'} decoding="async" />)}
+          {[0, 1].map(i => <img key={i} src={withBase('/images/hero-image.webp')} alt="" width={1600} height={781} fetchPriority={i === 0 ? 'high' : 'low'} decoding="async" />)}
         </div>
       </section>
     )
@@ -126,7 +127,7 @@ export default function Hero({ variant = 'center' }: { variant?: 'center' | 'spl
 
       <div className="hero-img-wrap">
         <img
-          src="/images/hero-image.webp"
+          src={withBase('/images/hero-image.webp')}
           alt="Nigerian professionals at work"
           width={1600}
           height={781}

@@ -1,4 +1,5 @@
 'use client'
+import { IS_STATIC_PREVIEW, STATIC_PREVIEW_FORM_MESSAGE } from '@/lib/paths'
 
 import { useState, useMemo, type FormEvent } from 'react'
 import { getWhatsAppUrl, WHATSAPP_RAW_PHONE } from '@/lib/whatsapp'
@@ -33,6 +34,12 @@ export default function ContactForm() {
     const phone = (data.get('phone') as string)?.trim() || ''
     const company = (data.get('company') as string)?.trim() || ''
     const message = (data.get('message') as string)?.trim() || ''
+
+    if (IS_STATIC_PREVIEW) {
+      setError(STATIC_PREVIEW_FORM_MESSAGE)
+      setSubmitting(false)
+      return
+    }
 
     try {
       const res = await fetch('/api/contact', {

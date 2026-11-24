@@ -5,6 +5,7 @@ import './globals.css'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 import JsonLd from '@/components/JsonLd'
 import { SITE_URL, SITE_NAME, TWITTER_HANDLE } from '@/lib/seo'
+import { IS_STATIC_PREVIEW } from '@/lib/paths'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -71,11 +72,15 @@ export const metadata: Metadata = {
     description:
       'Instant, confidential salary-backed loans for your staff. Zero cost to your organisation.',
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
-  },
+  // The GitHub Pages preview must not compete with the real domain in search results.
+  robots: IS_STATIC_PREVIEW
+    ? { index: false, follow: false }
+    : {
+        index: true,
+        follow: true,
+        googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
+      },
+
 }
 
 const organizationLd = {

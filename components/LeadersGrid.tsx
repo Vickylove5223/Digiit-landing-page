@@ -1,4 +1,5 @@
 'use client'
+import { withBase } from '@/lib/paths'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 type Leader = {
@@ -15,7 +16,7 @@ const LEADERS: Leader[] = [
   {
     name: 'Olaleye Adebiyi',
     role: 'Chairman',
-    photo: '/images/leader-chairman.webp',
+    photo: withBase('/images/leader-chairman.webp'),
     bio: [
       'He is the Country Managing Partner, ANDERSEN TAX LP, Lagos, Nigeria. He obtained an Honours Degree in Law (LLB) from the University of Ife, Ile-Ife, Nigeria in 1987, attended the Nigerian Law School in 1988, and obtained a Master’s Degree in Law (LL.M) from Obafemi Awolowo University, Ile-Ife, Nigeria in 1990.',
       'He brings a wide range of experience in tax advisory, corporate/commercial transactions in the oil and gas and telecom sectors, foreign investment and privatization.',
@@ -24,7 +25,7 @@ const LEADERS: Leader[] = [
   {
     name: 'Wole Ajomale',
     role: 'Managing Director',
-    photo: '/images/leader-md.webp',
+    photo: withBase('/images/leader-md.webp'),
     bio: [
       'Wole is a seasoned finance expert with over 35 years of experience in investment management, strategic financial planning, and corporate finance. He holds a Bachelor’s degree in International Relations from the Obafemi Awolowo University, Ile-Ife, Nigeria.',
       'He leads a diverse team of financial professionals in developing innovative investment strategies and providing tailored financial solutions to clients. His visionary leadership has been instrumental in driving the company’s growth, enhancing its market position, and expanding its service offerings.',
@@ -35,7 +36,7 @@ const LEADERS: Leader[] = [
   {
     name: 'Bolaji Shenjobi',
     role: 'Executive Director',
-    photo: '/images/leader-ed.webp',
+    photo: withBase('/images/leader-ed.webp'),
     bio: [
       'Bolaji is a highly accomplished accountant with over 35 years of experience in financial services, specializing in liquidity management, strategic investment management and corporate finance. He holds a B.A. Accounting degree from St. Ambrose University, Iowa, USA.',
       'He is responsible for steering the firm’s strategic initiatives, overseeing investment portfolios, and fostering relationships with key stakeholders. His leadership has been pivotal in driving growth, enhancing operational efficiency, and positioning the company as a leader in the competitive financial landscape.',
@@ -45,7 +46,7 @@ const LEADERS: Leader[] = [
   {
     name: 'Umma Yusuf Aboki',
     role: 'Independent Non-Executive Director (INED)',
-    photo: '/images/leader-umma.webp',
+    photo: withBase('/images/leader-umma.webp'),
     credentials: 'MSc | MBA | CP3P Certified PPP Professional',
     bio: [
       'Umma Yusuf Aboki is an accomplished leader with over 25 years of diverse experience across the public and private sectors, specializing in banking, investment promotion, and public-private partnerships (PPP). She has a proven track record of driving economic growth, fostering strategic partnerships, and managing high-value client portfolios.',

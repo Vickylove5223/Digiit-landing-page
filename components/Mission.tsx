@@ -1,3 +1,4 @@
+import { withBase } from '@/lib/paths'
 export default function Mission() {
   return (
     <section className="mission">
@@ -9,7 +10,7 @@ export default function Mission() {
         <div className="mission-person">
           <div className="mission-avatar">
             <img
-              src="/images/mission-md.webp"
+              src={withBase('/images/mission-md.webp')}
               loading="lazy"
               decoding="async"
               alt="Wole Ajomale"

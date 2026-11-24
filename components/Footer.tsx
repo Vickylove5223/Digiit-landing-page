@@ -1,3 +1,4 @@
+import { withBase } from '@/lib/paths'
 import { LOGO_SRC } from '@/lib/logo'
 import PromoBanner from '@/components/PromoBanner'
 
@@ -13,8 +14,8 @@ export default function Footer() {
             <h2 className="foot-headline">
               Loans That Work As Hard As Employees Do.
             </h2>
-            <a className="foot-logo" href="/" aria-label="Digiit by FundiT, back to home">
-              <img src={LOGO_SRC} alt="Digiit by FundiT" width={115} height={50} style={{ objectFit: 'contain' }} />
+            <a className="foot-logo" href={withBase('/')} aria-label="Digiit by FundiT, back to home">
+              <img src={withBase(LOGO_SRC)} alt="Digiit by FundiT" width={115} height={50} style={{ objectFit: 'contain' }} />
             </a>
             <div className="foot-socials">
               <a href="https://instagram.com/digiitng" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
@@ -48,10 +49,10 @@ export default function Footer() {
           <div className="foot-col">
             <h3 className="foot-title">Company</h3>
             <ul className="foot-links">
-              <li><a href="/about">About Us</a></li>
-              <li><a href="/blog">Our Blog</a></li>
-              <li><a href="/apply">Apply Now</a></li>
-              <li><a href="/contact">Contact Us</a></li>
+              <li><a href={withBase('/about')}>About Us</a></li>
+              <li><a href={withBase('/blog')}>Our Blog</a></li>
+              <li><a href={withBase('/apply')}>Apply Now</a></li>
+              <li><a href={withBase('/contact')}>Contact Us</a></li>
             </ul>
           </div>
 
@@ -59,10 +60,10 @@ export default function Footer() {
           <div className="foot-col">
             <h3 className="foot-title">Legal</h3>
             <ul className="foot-links">
-              <li><a href="/privacy">Privacy Policy</a></li>
-              <li><a href="/cookies">Cookie Policy</a></li>
-              <li><a href="/data-protection">Data Protection</a></li>
-              <li><a href="/complaints">Complaints Policy</a></li>
+              <li><a href={withBase('/privacy')}>Privacy Policy</a></li>
+              <li><a href={withBase('/cookies')}>Cookie Policy</a></li>
+              <li><a href={withBase('/data-protection')}>Data Protection</a></li>
+              <li><a href={withBase('/complaints')}>Complaints Policy</a></li>
             </ul>
           </div>
 

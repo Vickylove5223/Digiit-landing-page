@@ -1,7 +1,8 @@
+import { withBase } from '@/lib/paths'
 const AVATARS = [
-  "/images/avatar-1.webp",
-  "/images/avatar-2.webp",
-  "/images/avatar-3.webp",
+  withBase('/images/avatar-1.webp'),
+  withBase('/images/avatar-2.webp'),
+  withBase('/images/avatar-3.webp'),
 ]
 
 export default function AvatarCycle() {

@@ -1042,7 +1042,7 @@ h1 span {
   overflow: hidden;
   padding: clamp(2rem, 4vw, 3rem) clamp(1rem, 3vw, 2.25rem);
   background:
-    url('/images/staff-loan-bg.webp') center bottom / auto 88% no-repeat,
+    url('../public/images/staff-loan-bg.webp') center bottom / auto 88% no-repeat,
     radial-gradient(circle, rgba(255, 255, 255, 0.13) 1px, transparent 1px) 0 0 / 24px 24px,
     linear-gradient(160deg, var(--indigo-deep) 0%, var(--indigo) 55%, #34489e 100%);
 }
@@ -1280,7 +1280,7 @@ h1 span {
   background: var(--sky);
 }
 .feature--stack-panel.panel.sky {
-  background-image: url('/images/team-office.webp');
+  background-image: url('../public/images/team-office.webp');
   background-size: cover;
   background-position: center;
 }

@@ -1,15 +1,15 @@
 'use client'
 import { useState } from 'react'
+import { BASE_PATH } from '@/lib/paths'
+import { SITE_URL } from '@/lib/seo'
 
 type Props = { title: string; path: string }
-
-const SITE_URL = 'https://www.digiit.com.ng'
 
 export default function ShareButtons({ title, path }: Props) {
   const [copied, setCopied] = useState(false)
 
   // Use the address the reader is actually on (works on localhost, staging and live).
-  const pageUrl = () => (typeof window !== 'undefined' ? window.location.origin + path : SITE_URL + path)
+  const pageUrl = () => (typeof window !== 'undefined' ? window.location.origin + BASE_PATH + path : SITE_URL + path)
 
   const openPopup = (href: string) => {
     const w = 600, h = 560

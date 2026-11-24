@@ -1,4 +1,5 @@
 'use client'
+import { withBase } from '@/lib/paths'
 import { useState } from 'react'
 import { faqItems } from '@/lib/faq'
 
@@ -14,7 +15,7 @@ export default function FAQ() {
           <div className="faq-col-left">
             <div className="faq-image-card">
               <img
-                src="/images/faq-support.webp"
+                src={withBase('/images/faq-support.webp')}
                 width={574}
                 height={856}
                 loading="lazy"

@@ -1,4 +1,5 @@
 'use client'
+import { IS_STATIC_PREVIEW, STATIC_PREVIEW_FORM_MESSAGE } from '@/lib/paths'
 import { useState, useMemo, useEffect, type FormEvent } from 'react'
 import SuccessModal, { type SuccessModalDetail } from '@/components/SuccessModal'
 
@@ -113,6 +114,12 @@ export default function ApplicationForm() {
       payload.tenor = tenor
       payload.monthlyDeduction = monthlyDeduction
       payload.totalRepayment = totalRepayment
+    }
+
+    if (IS_STATIC_PREVIEW) {
+      setError(STATIC_PREVIEW_FORM_MESSAGE)
+      setSubmitting(false)
+      return
     }
 
     try {

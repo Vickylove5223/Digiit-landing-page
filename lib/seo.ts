@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-export const SITE_URL = 'https://www.digiit.com.ng'
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.digiit.com.ng'
 export const SITE_NAME = 'Digiit'
 export const TWITTER_HANDLE = '@digiitng'
 export const DEFAULT_OG_IMAGE = {

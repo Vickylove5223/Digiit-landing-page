@@ -2,6 +2,8 @@ import type { MetadataRoute } from 'next'
 import { getAllPosts, toIsoDate } from '@/lib/blog'
 import { SITE_URL } from '@/lib/seo'
 
+export const dynamic = 'force-static'
+
 // Bump when the content of the static pages changes meaningfully.
 const PAGES_UPDATED = '2026-11-24'
 

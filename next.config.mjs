@@ -11,25 +11,34 @@ const securityHeaders = [
   { key: 'Content-Security-Policy', value: "frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'" },
 ]
 
+// GITHUB_PAGES=true builds a static copy for the GitHub Pages preview
+// (no API routes, no custom headers; served under /<repo-name>).
+const isGithubPages = process.env.GITHUB_PAGES === 'true'
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
+
 const nextConfig = {
+  ...(isGithubPages ? { output: 'export', basePath, trailingSlash: true } : {}),
   // A stray package-lock.json in the user folder confuses root detection.
   turbopack: { root: fileURLToPath(new URL('.', import.meta.url)) },
   poweredByHeader: false,
   // Images are pre-optimised WebP files served statically; the on-demand optimiser
   // (/_next/image) is disabled to remove its attack surface.
   images: { unoptimized: true },
-  async headers() {
-    return [
-      { source: '/:path*', headers: securityHeaders },
-      {
-        source: '/images/:path*',
-        headers: [{ key: 'Cache-Control', value: 'public, max-age=2592000, stale-while-revalidate=86400' }],
-      },
-      {
-        source: '/api/:path*',
-        headers: [{ key: 'Cache-Control', value: 'no-store' }],
-      },
-    ]
-  },
+  ...(isGithubPages ? {} : { headers }),
 }
+
+async function headers() {
+  return [
+    { source: '/:path*', headers: securityHeaders },
+    {
+      source: '/images/:path*',
+      headers: [{ key: 'Cache-Control', value: 'public, max-age=2592000, stale-while-revalidate=86400' }],
+    },
+    {
+      source: '/api/:path*',
+      headers: [{ key: 'Cache-Control', value: 'no-store' }],
+    },
+  ]
+}
+
 export default nextConfig

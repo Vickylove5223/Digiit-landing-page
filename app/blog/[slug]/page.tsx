@@ -1,3 +1,4 @@
+import { withBase } from '@/lib/paths'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Header from '@/components/Header'
@@ -82,7 +83,7 @@ export default async function SinglePostPage({ params }: PageProps) {
         <div className="art-hero">
         {/* Title */}
         <header className="art-head wrap">
-          <a href="/blog" className="art-back">
+          <a href={withBase('/blog')} className="art-back">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6" /></svg>
             All articles
           </a>
@@ -165,11 +166,11 @@ export default async function SinglePostPage({ params }: PageProps) {
             <div className="wrap">
               <div className="art-more-head">
                 <h2>More stories</h2>
-                <a href="/blog">View all articles &rarr;</a>
+                <a href={withBase('/blog')}>View all articles &rarr;</a>
               </div>
               <div className="blog-grid" style={{ marginBottom: 0 }}>
                 {relatedPosts.map((rPost) => (
-                  <a key={rPost.slug} href={`/blog/${rPost.slug}`} className="blog-card">
+                  <a key={rPost.slug} href={withBase(`/blog/${rPost.slug}`)} className="blog-card">
                     <div className="blog-card-img-wrap">
                       <img src={rPost.image} alt={rPost.title} className="blog-card-img" width={600} height={400} loading="lazy" decoding="async" />
                     </div>

@@ -1,4 +1,5 @@
 'use client'
+import { withBase } from '@/lib/paths'
 import { useEffect, useRef, useState } from 'react'
 import { LOGO_SRC } from '@/lib/logo'
 
@@ -32,7 +33,7 @@ export default function PayrollSpotlight() {
         {/* zoomed-in slice of the Digiit HR app, bleeding off the frame */}
         <div className="pv-app">
           <div className="pv-app__top">
-            <img className="pv-brand" src={LOGO_SRC} alt="" width={50} height={22} />
+            <img className="pv-brand" src={withBase(LOGO_SRC)} alt="" width={50} height={22} />
             <span className="pv-tab on">Overview</span>
             <span className="pv-tab">Deductions</span>
           </div>

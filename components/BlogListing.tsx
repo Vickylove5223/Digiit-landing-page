@@ -1,4 +1,5 @@
 'use client'
+import { withBase } from '@/lib/paths'
 import { useState } from 'react'
 import { BLOG_POSTS } from '@/lib/blog'
 
@@ -26,7 +27,7 @@ export default function BlogListing() {
     <>
       {/* Featured Post Card (Only shown when 'All' is selected) */}
       {selectedCat === 'All' && featuredPost && (
-        <a href={`/blog/${featuredPost.slug}`} className="blog-featured-card">
+        <a href={withBase(`/blog/${featuredPost.slug}`)} className="blog-featured-card">
           <div className="blog-featured-img-wrap">
             <img
               src={featuredPost.image}
@@ -44,7 +45,7 @@ export default function BlogListing() {
       {/* Grid of Articles */}
       <div className="blog-grid">
         {gridPosts.slice(0, visibleCount).map((post) => (
-          <a key={post.slug} href={`/blog/${post.slug}`} className="blog-card">
+          <a key={post.slug} href={withBase(`/blog/${post.slug}`)} className="blog-card">
             <div className="blog-card-img-wrap">
               <img
                 src={post.image}

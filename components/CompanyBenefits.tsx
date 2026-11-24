@@ -1,3 +1,4 @@
+import { withBase } from '@/lib/paths'
 import PayrollSpotlight from '@/components/PayrollSpotlight'
 
 const ITEMS = [
@@ -9,7 +10,7 @@ const ITEMS = [
   { title: 'Happier, more loyal staff', text: 'Financially secure employees stay longer and focus better at work.' },
 ]
 
-const BG = '/images/hr-payroll-bg.webp'
+const BG = withBase('/images/hr-payroll-bg.webp')
 
 export default function CompanyBenefits() {
   return (
